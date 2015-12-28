@@ -1,0 +1,1 @@
+All my libraries etc. for stockfighter
