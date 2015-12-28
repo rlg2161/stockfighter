@@ -3,49 +3,45 @@
 package main
 
 import (
-  "io/ioutil"
-  "encoding/json"
-  "fmt"
-  "net/http"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
 )
 
 type Heartbeat struct {
-  Ok bool `json:"ok"`
-  Error string `json:"error"`
+	Ok    bool   `json:"ok"`
+	Error string `json:"error"`
 }
 
 type HeartbeatVenue struct {
-  Ok bool `json:"ok"`
-  Venue string `json:"venue"`
+	Ok    bool   `json:"ok"`
+	Venue string `json:"venue"`
 }
 
-func HeartbeatAPI() (Heartbeat) {
+func HeartbeatAPI() Heartbeat {
 
-  response, err := http.Get("https://api.stockfighter.io/ob/api/heartbeat")
-  if err != nil {
-    fmt.Println(err)
-  }
+	response, err := http.Get("https://api.stockfighter.io/ob/api/heartbeat")
+	if err != nil {
+		fmt.Println(err)
+	}
 
-  body, err := ioutil.ReadAll(response.Body)
+	body, err := ioutil.ReadAll(response.Body)
 
-  var heartbeat Heartbeat
-  json.Unmarshal(body, &heartbeat)
-  return heartbeat
+	var heartbeat Heartbeat
+	json.Unmarshal(body, &heartbeat)
+	return heartbeat
 
 }
 
-func HeartbeatVenueAPI(venue string) (HeartbeatVenue) {
-  resp, err := http.Get("https://api.stockfighter.io/ob/api/venues/" + venue + "/heartbeat")
-  if err != nil {
-    fmt.Println(err)
-  }
-  body, err := ioutil.ReadAll(resp.Body)
+func HeartbeatVenueAPI(venue string) HeartbeatVenue {
+	resp, err := http.Get("https://api.stockfighter.io/ob/api/venues/" + venue + "/heartbeat")
+	if err != nil {
+		fmt.Println(err)
+	}
+	body, err := ioutil.ReadAll(resp.Body)
 
-  var heartbeatVenue HeartbeatVenue
-  json.Unmarshal(body, &heartbeatVenue)
-  return heartbeatVenue
+	var heartbeatVenue HeartbeatVenue
+	json.Unmarshal(body, &heartbeatVenue)
+	return heartbeatVenue
 }
-
-
-
-
